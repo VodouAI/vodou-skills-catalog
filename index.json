@@ -1,5 +1,25 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-26T00:00:00Z",
-  "entries": []
+  "updated_at": "2026-04-26T23:55:00Z",
+  "entries": [
+    {
+      "id": "vodou.hello-catalog",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "2ecebda06ab5ca2cb3712f15d058db70e17521a3fb499562351a528a660d0c15",
+      "skill_name": "hello-catalog",
+      "summary": "First catalog smoke-test skill",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/hello-catalog"
+      },
+      "requires_mcp": [],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "test"
+      ]
+    }
+  ]
 }
