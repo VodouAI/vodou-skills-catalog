@@ -1,0 +1,28 @@
+name: validate catalog
+
+on:
+  pull_request:
+    paths:
+      - 'index.json'
+      - 'skills/**'
+      - 'schemas/**'
+      - 'scripts/validate-catalog.mjs'
+      - '.github/workflows/validate.yml'
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install validator deps
+        run: npm init -y && npm install --save-dev ajv ajv-formats js-yaml
+
+      - name: Validate catalog
+        run: node scripts/validate-catalog.mjs

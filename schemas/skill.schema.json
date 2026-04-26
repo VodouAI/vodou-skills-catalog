@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vodou.ai/schemas/skill.v1.json",
+  "title": "VodouSkillFrontmatter",
+  "description": "Canonical YAML frontmatter shape for SKILL.md files in the Vodou skills system. Locked in PLAN-SKILLS-V2 §2 + §0.3 + §0.6. Validators (the Phase 1 `brain-trust4 skill validate` subcommand, the `VodouAI/vodou-skills-catalog` CI workflow) MUST exit non-zero when a SKILL.md frontmatter fails this schema.",
+  "type": "object",
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,63}$",
+      "description": "Kebab-case slug. MUST match the parent directory name. Used as the unique key in skills_registry."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200,
+      "description": "One-sentence summary, no period at end. Rendered in catalog lists, slash menus, and `brain-trust4 skill list`."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$",
+      "description": "Semver. Required for catalog tracking (catalog upgrades compare versions); inferred as 1.0.0 by the migrator if absent on hand-written skills."
+    },
+    "kind": {
+      "enum": ["workflow", "subagent"],
+      "default": "workflow",
+      "description": "workflow = traditional OI skill (trigger_phrases, stopping_points, actions). subagent = persona delegated to via Task tool (skills/agents/<category>/<name>/). The two kinds have different schema requirements (see allOf below)."
+    },
+    "required_tools": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)?$" },
+      "description": "Array of '<server>' or '<server>.<tool>' strings. Server-only declares a hard dependency on the server being present; the dotted form pins a specific tool. Empty [] explicitly = pure markdown skill (no MCP needed)."
+    },
+    "trigger_phrases": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 80 },
+      "description": "Phrases that auto-populate intent_mappings rows on `brain-trust4 skill sync`. Source `auto-skill-trigger`, priority 40. User-curated rows at priority 80+ override these."
+    },
+    "stopping_points": {
+      "enum": ["required", "optional", "none"],
+      "description": "Workflow contract: required = MUST hit at least one numbered menu before completing. optional = stops are present but completion-without-stop is acceptable. none = run-to-completion (research, summary, etc.)."
+    },
+    "actions": {
+      "enum": ["actions.json", "inline", "none"],
+      "description": "Declares whether the skill HAS structured workflow JSON, not which file is 'official'. Per §0.7c, inline AGENT_ACTIONS in SKILL.md is the canonical authoring source; actions.json is auto-generated cache. inline = AGENT_ACTIONS HTML comments in body (canonical). actions.json = sidecar-only (legacy/imported). none = pure markdown."
+    },
+    "imported_from": {
+      "type": "object",
+      "description": "Provenance tracking for non-hand-written skills. Required for any skill that came from an external source.",
+      "properties": {
+        "source": {
+          "enum": ["hermes", "claude-code", "catalog", "hand-written", "url"],
+          "description": "Origin of the skill. hand-written = authored directly in this repo."
+        },
+        "upstream_id": {
+          "type": "string",
+          "description": "Source-specific identifier. e.g. for Hermes: '@cocal/google-calendar-mcp'. for Claude Code: filename. for catalog: catalog entry id."
+        },
+        "upstream_version": {
+          "type": "string",
+          "description": "Pinned version at import time."
+        },
+        "upstream_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "sha256 of upstream content at import time. Used by `brain-trust4 skill diff` to surface upstream changes."
+        },
+        "upstream_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Link back to upstream source for fork-and-adjust workflow."
+        }
+      },
+      "required": ["source"]
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Open-ended container for adapter-specific or convention-specific keys.",
+      "properties": {
+        "vodou": {
+          "type": "object",
+          "description": "Vodou-specific metadata. Keys here are recognized by the loader and tooling. Open-ended — adapter mappings (e.g. metadata.vodou.tags from Hermes imports) land here without breaking the canonical schema.",
+          "properties": {
+            "config": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "gateway_settings keys to inject at skill load. e.g. ['api_endpoint', 'default_model']."
+            },
+            "platforms": {
+              "type": "array",
+              "items": { "enum": ["macos", "linux", "windows"] },
+              "description": "Platform compat filter. Skills filtered out of catalog index on incompatible platforms."
+            },
+            "related_skills": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Cross-references for the catalog UI."
+            },
+            "deprecated": {
+              "type": "boolean",
+              "description": "Mark superseded skills."
+            },
+            "deprecated_by": {
+              "type": "string",
+              "description": "Pointer to the replacement skill name."
+            },
+            "preservation_reason": {
+              "type": "string",
+              "description": "Audit trail for §0.1 preservation list entries (e.g. 'user-preserved 2026-04-25')."
+            },
+            "persona_role": {
+              "type": "string",
+              "description": "Subagent kind only: short role description (e.g. 'experiment tracker', 'pitch coach')."
+            },
+            "preferred_tools": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Subagent kind only: tool names the subagent prefers (e.g. ['Read', 'Write', 'Bash'])."
+            },
+            "preferred_model": {
+              "type": "string",
+              "description": "Optional preferred model when invoked (e.g. 'sonnet'). Honored by adapters; not enforced by the runtime."
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "const": "workflow" } } },
+      "then": {
+        "required": ["trigger_phrases", "stopping_points", "actions"],
+        "description": "workflow kind requires the full routing + workflow contract."
+      }
+    }
+  ]
+}

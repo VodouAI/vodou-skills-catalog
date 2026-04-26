@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vodou.ai/schemas/actions.v1.json",
+  "title": "VodouActions",
+  "description": "Canonical shape for actions.json sidecars AND for the inline `<!-- AGENT_ACTIONS: {...} -->` JSON block in SKILL.md bodies. Locked in PLAN-SKILLS-V2 §3 + §0.7c. The workflow-driver engine at MCP-servers/OI-AI-gateway/src/workflow-driver.ts:551-595 (actions.json fast-path) and :597+ (inline AGENT_ACTIONS) both consume this shape. Per §0.7c, inline is the canonical authoring source; actions.json is the auto-generated cache.",
+  "type": "object",
+  "required": ["stopping_points"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Pinned schema version. Required for forward-compat; readers MAY warn on mismatch."
+    },
+    "initial_steps": {
+      "type": "array",
+      "description": "Steps run automatically on skill load, BEFORE the first stopping point is presented. Used for setup actions (open browser, fetch context, etc.). Each step is executed via brain-trust4 MCP call.",
+      "items": { "$ref": "#/definitions/step" }
+    },
+    "stopping_points": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered list of user-input gates. The engine renders the first one's options and STOPS for user choice — no LLM call. After the user selects, that option's `steps` run, then the engine advances to the next stopping_point (or completion).",
+      "items": { "$ref": "#/definitions/stopping_point" }
+    },
+    "completion": {
+      "type": "object",
+      "description": "Optional terminal block. Runs after the last stopping_point's steps complete.",
+      "properties": {
+        "summary_template": {
+          "type": "string",
+          "description": "Template string with {{VAR}} substitutions from variables captured during the workflow. Rendered as the final user-facing message."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "stopping_point": {
+      "type": "object",
+      "required": ["id", "options"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sequential identifier. By convention numbered 1, 2, 3, ... in order."
+        },
+        "title": {
+          "type": "string",
+          "description": "Header rendered above the menu (or as the prompt for text_input). Required when type='menu'; falls back to 'Choose' if absent."
+        },
+        "type": {
+          "enum": ["menu", "text_input", "multi_select", "confirm", "file_upload"],
+          "default": "menu",
+          "description": "menu = numbered options (default). text_input = free-text prompt; user reply captured into `capture_as`. multi_select / confirm / file_upload = future types reserved by the engine."
+        },
+        "capture_as": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "description": "For type='text_input': variable name to capture the user's reply into. Available as {{NAME}} in subsequent step args and the completion summary_template."
+        },
+        "options": {
+          "type": "object",
+          "description": "Keyed object {N: option}. KEYS are the strings users type to select (typically '1', '2', '3'). NOT a list of strings — that was the broken fundraising shape, see §0.7b. Empty {} is allowed for type='text_input'.",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": { "$ref": "#/definitions/option" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "option": {
+      "type": "object",
+      "required": ["label"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable option text shown in the menu."
+        },
+        "vars": {
+          "type": "object",
+          "description": "Variables captured into the workflow context when this option is chosen. e.g. {SCOPE: 'full'}. Available as {{NAME}} in subsequent step args.",
+          "additionalProperties": { "type": ["string", "number", "boolean"] }
+        },
+        "steps": {
+          "type": "array",
+          "description": "MCP tool calls executed when this option is chosen, before advancing to the next stopping_point. Empty [] = no auto-execution; the engine just records the choice and advances.",
+          "items": { "$ref": "#/definitions/step" }
+        },
+        "goto": {
+          "type": ["integer", "string"],
+          "description": "Optional branching: jump to the stopping_point with this id (instead of falling through to the next sequential one). Used for skip-ahead or subworkflow patterns."
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "required": ["server", "tool"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Optional identifier for the step. Inferred as 'step_<index>' if absent."
+        },
+        "server": {
+          "type": "string",
+          "description": "MCP server name (e.g. 'vodou-mac-control', 'google-calendar', 'brain-trust4')."
+        },
+        "tool": {
+          "type": "string",
+          "description": "Tool name within the server (e.g. 'screenshot', 'list-events')."
+        },
+        "args": {
+          "type": "object",
+          "description": "Tool arguments. String values support {{VAR}} template substitution from workflow variables.",
+          "additionalProperties": true
+        },
+        "loop": {
+          "type": ["integer", "object"],
+          "description": "Optional loop directive: integer N = repeat step N times; object = future loop config (range, until, etc.)."
+        },
+        "capture": {
+          "type": "object",
+          "description": "Variable-extraction map: {VAR_NAME: 'field_or_json_path'}. The engine reads the step's output, looks up each value (either a top-level field name or a JSON path) and binds it to the uppercase VAR_NAME. Captured vars are available as {{VAR_NAME}} in subsequent step args and in completion.summary_template. Example: {\"SESSION_ID\": \"session_id\"} extracts the 'session_id' field from the tool's output and binds it to SESSION_ID. Engine type at workflow-driver.ts:34 is `capture?: Record<string, string>`.",
+          "patternProperties": {
+            "^[A-Z][A-Z0-9_]*$": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "stream_progress": {
+          "type": "boolean",
+          "description": "Whether to stream the step's output to the user in real-time (true) or only after completion (false)."
+        }
+      }
+    }
+  }
+}

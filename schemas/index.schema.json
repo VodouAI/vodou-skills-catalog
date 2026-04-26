@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/VodouAI/vodou-skills-catalog/schemas/index.schema.json",
+  "title": "Vodou Skills Catalog Index",
+  "type": "object",
+  "required": ["catalog_version", "updated_at", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "catalog_version": { "type": "integer", "minimum": 1 },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/entry" }
+    }
+  },
+  "definitions": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "tier", "version", "sha256", "skill_name", "summary", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+\\.[a-z0-9-]+$",
+          "description": "Namespaced id, e.g. vodou.calendar-quick-status"
+        },
+        "tier": { "enum": ["curated", "community"] },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "skill_name": {
+          "type": "string",
+          "description": "Must match SKILL.md frontmatter `name`"
+        },
+        "summary": { "type": "string", "maxLength": 200 },
+        "source": {
+          "type": "object",
+          "required": ["type", "url", "ref", "path_in_repo"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "enum": ["git"] },
+            "url": { "type": "string", "format": "uri" },
+            "ref": { "type": "string", "description": "git tag or commit sha" },
+            "path_in_repo": { "type": "string" }
+          }
+        },
+        "requires_mcp": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "MCP server.tool identifiers the skill calls"
+        },
+        "min_oi_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "compatibility": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "schema_version": { "type": "string" },
+            "stopping_points": { "type": "string" },
+            "actions": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
