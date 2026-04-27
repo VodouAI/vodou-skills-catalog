@@ -235,7 +235,7 @@
       "id": "vodou.forgotten-contacts",
       "tier": "curated",
       "version": "1.0.0",
-      "sha256": "11555e62eb2e68ffd0b83ca589b29fd7851a12c0ac3a3ce0c74063085c305dfd",
+      "sha256": "476bcaa14a92dd87c54159131ae8c9da36306d6c7dff16b36e573edc544795f5",
       "skill_name": "forgotten-contacts",
       "summary": "Surface iMessage contacts you've gone quiet on",
       "source": {
@@ -245,7 +245,7 @@
         "path_in_repo": "skills/forgotten-contacts"
       },
       "requires_mcp": [
-        "io.github.anipotts/imessage-mcp.forgotten_contacts"
+        "imessage-mcp"
       ],
       "min_oi_version": "0.5.46",
       "tags": [

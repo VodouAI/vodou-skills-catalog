@@ -3,7 +3,7 @@ name: forgotten-contacts
 description: Surface iMessage contacts you've gone quiet on — last 90 days, last year, or only previously-engaged
 version: 1.0.0
 kind: workflow
-required_tools: [io.github.anipotts/imessage-mcp.forgotten_contacts]
+required_tools: [imessage-mcp]
 trigger_phrases:
   - forgotten contacts
   - who haven't I messaged
