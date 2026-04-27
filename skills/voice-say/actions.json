@@ -1,0 +1,31 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "What to do?",
+      "options": {
+        "1": {
+          "label": "Speak it",
+          "vars": {},
+          "steps": [
+            {"server": "OI-channels", "tool": "voice_speak", "args": {"text": "{{TOPIC}}"}}
+          ]
+        },
+        "2": {
+          "label": "List voices",
+          "vars": {},
+          "steps": [
+            {"server": "OI-channels", "tool": "voice_list_voices", "args": {}}
+          ]
+        },
+        "3": {
+          "label": "Stop talking",
+          "vars": {},
+          "steps": [
+            {"server": "OI-channels", "tool": "voice_stop", "args": {}}
+          ]
+        }
+      }
+    }
+  ]
+}

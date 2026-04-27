@@ -1,0 +1,24 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "Scope",
+      "options": {
+        "1": {
+          "label": "All sessions",
+          "vars": {},
+          "steps": [
+            {"server": "OI-session-manager", "tool": "list_sessions", "args": {}}
+          ]
+        },
+        "2": {
+          "label": "Filter by server",
+          "vars": {},
+          "steps": [
+            {"server": "OI-session-manager", "tool": "list_sessions", "args": {"server_name": "{{TOPIC}}"}}
+          ]
+        }
+      }
+    }
+  ]
+}

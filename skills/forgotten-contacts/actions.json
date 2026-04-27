@@ -1,0 +1,31 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "Lookback window",
+      "options": {
+        "1": {
+          "label": "Last 90 days quiet (top 20)",
+          "vars": {},
+          "steps": [
+            {"server": "io.github.anipotts/imessage-mcp", "tool": "forgotten_contacts", "args": {"inactive_days": 90, "limit": 20}}
+          ]
+        },
+        "2": {
+          "label": "Past year quiet (top 30)",
+          "vars": {},
+          "steps": [
+            {"server": "io.github.anipotts/imessage-mcp", "tool": "forgotten_contacts", "args": {"inactive_days": 365, "limit": 30}}
+          ]
+        },
+        "3": {
+          "label": "Quick wins (high-engagement, gone quiet)",
+          "vars": {},
+          "steps": [
+            {"server": "io.github.anipotts/imessage-mcp", "tool": "forgotten_contacts", "args": {"inactive_days": 90, "limit": 10, "min_messages": 25}}
+          ]
+        }
+      }
+    }
+  ]
+}

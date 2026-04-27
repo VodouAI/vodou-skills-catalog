@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-27T01:30:00Z",
+  "updated_at": "2026-04-27T01:45:00Z",
   "entries": [
     {
       "id": "vodou.hello-catalog",
@@ -183,6 +183,74 @@
       "tags": [
         "reference",
         "docs"
+      ]
+    },
+    {
+      "id": "vodou.voice-say",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "d5dadf7cf6873a7456791d98028d0519f8e7317254f9d4c9965fbe13e7eeec73",
+      "skill_name": "voice-say",
+      "summary": "Speak text out loud \u2014 speak it, list voices, or stop playback",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/voice-say"
+      },
+      "requires_mcp": [
+        "OI-channels.voice_speak",
+        "OI-channels.voice_list_voices",
+        "OI-channels.voice_stop"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "media",
+        "voice"
+      ]
+    },
+    {
+      "id": "vodou.sessions-overview",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "774fb967394ce47cedada694e8246c56316fda9e1062b1eed92f19257bd7a121",
+      "skill_name": "sessions-overview",
+      "summary": "List active OI MCP sessions \u2014 all, or filter by server",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/sessions-overview"
+      },
+      "requires_mcp": [
+        "OI-session-manager.list_sessions"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "ops",
+        "diagnostics"
+      ]
+    },
+    {
+      "id": "vodou.forgotten-contacts",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "11555e62eb2e68ffd0b83ca589b29fd7851a12c0ac3a3ce0c74063085c305dfd",
+      "skill_name": "forgotten-contacts",
+      "summary": "Surface iMessage contacts you've gone quiet on",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/forgotten-contacts"
+      },
+      "requires_mcp": [
+        "io.github.anipotts/imessage-mcp.forgotten_contacts"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "relationships",
+        "imessage"
       ]
     }
   ]
