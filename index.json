@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-26T23:55:00Z",
+  "updated_at": "2026-04-27T00:00:00Z",
   "entries": [
     {
       "id": "vodou.hello-catalog",
@@ -19,6 +19,30 @@
       "min_oi_version": "0.5.46",
       "tags": [
         "test"
+      ]
+    },
+    {
+      "id": "vodou.calendar-quick-status",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "2f150f7b73cfda219f590788d4ccc777855494a765b57b06b07c700966ccd929",
+      "skill_name": "calendar-quick-status",
+      "summary": "Show what's on the user's Google Calendar \u2014 next events, today, or by keyword",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/calendar-quick-status"
+      },
+      "requires_mcp": [
+        "google-calendar.list-events",
+        "google-calendar.get-current-time",
+        "google-calendar.search-events"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "productivity",
+        "google-calendar"
       ]
     }
   ]
