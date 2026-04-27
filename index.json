@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-27T01:45:00Z",
+  "updated_at": "2026-04-27T03:55:00Z",
   "entries": [
     {
       "id": "vodou.hello-catalog",
@@ -24,8 +24,8 @@
     {
       "id": "vodou.calendar-quick-status",
       "tier": "curated",
-      "version": "1.0.0",
-      "sha256": "820997f569474e614dfb377d5372203f143e43672bf21c63c9a9c1bacdd7d671",
+      "version": "1.0.1",
+      "sha256": "f53f6ac5d3dc2baf406b177564a413fdde24e499bb48eda0a3d6591b44457466",
       "skill_name": "calendar-quick-status",
       "summary": "Show what's on the user's Google Calendar \u2014 today, this week, next meeting, or by keyword",
       "source": {
