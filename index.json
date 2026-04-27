@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-27T00:00:00Z",
+  "updated_at": "2026-04-27T01:00:00Z",
   "entries": [
     {
       "id": "vodou.hello-catalog",
@@ -25,9 +25,9 @@
       "id": "vodou.calendar-quick-status",
       "tier": "curated",
       "version": "1.0.0",
-      "sha256": "2f150f7b73cfda219f590788d4ccc777855494a765b57b06b07c700966ccd929",
+      "sha256": "820997f569474e614dfb377d5372203f143e43672bf21c63c9a9c1bacdd7d671",
       "skill_name": "calendar-quick-status",
-      "summary": "Show what's on the user's Google Calendar \u2014 next events, today, or by keyword",
+      "summary": "Show what's on the user's Google Calendar \u2014 today, this week, next meeting, or by keyword",
       "source": {
         "type": "git",
         "url": "https://github.com/VodouAI/vodou-skills-catalog",
@@ -43,6 +43,56 @@
       "tags": [
         "productivity",
         "google-calendar"
+      ]
+    },
+    {
+      "id": "vodou.system-pulse",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "0bc9f3e22b25e1440cd020ecb8fde346eec870b7f17b1c766cbf997d90cc07fd",
+      "skill_name": "system-pulse",
+      "summary": "Quick system diagnostics \u2014 CPU, memory, disk, network, top processes via mcp-monitor",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/system-pulse"
+      },
+      "requires_mcp": [
+        "mcp-monitor.get_cpu_info",
+        "mcp-monitor.get_memory_info",
+        "mcp-monitor.get_disk_info",
+        "mcp-monitor.get_network_info",
+        "mcp-monitor.get_process_info"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "devops",
+        "diagnostics"
+      ]
+    },
+    {
+      "id": "vodou.think-deep",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "c50c169a1b18bbb161b53bc9bb6a6a0f8e423353a2ef13d6ec1f6b02aa45c9a8",
+      "skill_name": "think-deep",
+      "summary": "Run a multi-step thinking session on a topic \u2014 quick, thorough, or deep audit",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/think-deep"
+      },
+      "requires_mcp": [
+        "OI-Enhanced-Thinking.start_thinking_session",
+        "OI-Enhanced-Thinking.add_thought",
+        "OI-Enhanced-Thinking.complete_thinking_session"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "reasoning",
+        "analysis"
       ]
     }
   ]

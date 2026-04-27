@@ -1,0 +1,41 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "What do you want to see?",
+      "options": {
+        "1": {
+          "label": "Today",
+          "vars": {},
+          "steps": [
+            {"server": "google-calendar", "tool": "get-current-time", "args": {}, "capture": {"NOW": "currentTime"}},
+            {"server": "google-calendar", "tool": "list-events", "args": {"calendarId": "primary", "timeMin": "{{NOW}}", "maxResults": 20, "singleEvents": true, "orderBy": "startTime"}}
+          ]
+        },
+        "2": {
+          "label": "This week",
+          "vars": {},
+          "steps": [
+            {"server": "google-calendar", "tool": "get-current-time", "args": {}, "capture": {"NOW": "currentTime"}},
+            {"server": "google-calendar", "tool": "list-events", "args": {"calendarId": "primary", "timeMin": "{{NOW}}", "maxResults": 50, "singleEvents": true, "orderBy": "startTime"}}
+          ]
+        },
+        "3": {
+          "label": "Next meeting only",
+          "vars": {},
+          "steps": [
+            {"server": "google-calendar", "tool": "get-current-time", "args": {}, "capture": {"NOW": "currentTime"}},
+            {"server": "google-calendar", "tool": "list-events", "args": {"calendarId": "primary", "timeMin": "{{NOW}}", "maxResults": 1, "singleEvents": true, "orderBy": "startTime"}}
+          ]
+        },
+        "4": {
+          "label": "Search by keyword",
+          "vars": {},
+          "steps": [
+            {"server": "google-calendar", "tool": "search-events", "args": {"calendarId": "primary", "q": "{{TOPIC}}", "maxResults": 20}}
+          ]
+        }
+      }
+    }
+  ]
+}

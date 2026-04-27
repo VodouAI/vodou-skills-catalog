@@ -1,0 +1,36 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "Choose Scope",
+      "options": {
+        "1": {
+          "label": "Full",
+          "vars": {},
+          "steps": [
+            {"server": "mcp-monitor", "tool": "get_cpu_info", "args": {"per_cpu": true}},
+            {"server": "mcp-monitor", "tool": "get_memory_info", "args": {}},
+            {"server": "mcp-monitor", "tool": "get_disk_info", "args": {"path": "/"}},
+            {"server": "mcp-monitor", "tool": "get_network_info", "args": {}},
+            {"server": "mcp-monitor", "tool": "get_process_info", "args": {"limit": 10, "sort_by": "cpu"}}
+          ]
+        },
+        "2": {
+          "label": "Performance",
+          "vars": {},
+          "steps": [
+            {"server": "mcp-monitor", "tool": "get_cpu_info", "args": {"per_cpu": true}},
+            {"server": "mcp-monitor", "tool": "get_memory_info", "args": {}}
+          ]
+        },
+        "3": {
+          "label": "Storage",
+          "vars": {},
+          "steps": [
+            {"server": "mcp-monitor", "tool": "get_disk_info", "args": {"path": "/"}}
+          ]
+        }
+      }
+    }
+  ]
+}
