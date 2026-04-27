@@ -1,0 +1,31 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "Quality",
+      "options": {
+        "1": {
+          "label": "Quick (standard)",
+          "vars": {},
+          "steps": [
+            {"server": "OI-dalle", "tool": "generate_image", "args": {"prompt": "{{TOPIC}}", "model": "dall-e-3", "quality": "standard"}}
+          ]
+        },
+        "2": {
+          "label": "HD",
+          "vars": {},
+          "steps": [
+            {"server": "OI-dalle", "tool": "generate_image", "args": {"prompt": "{{TOPIC}}", "model": "dall-e-3", "quality": "hd"}}
+          ]
+        },
+        "3": {
+          "label": "Variations (4)",
+          "vars": {},
+          "steps": [
+            {"server": "OI-dalle", "tool": "generate_image", "args": {"prompt": "{{TOPIC}}", "model": "dall-e-2", "n": 4}}
+          ]
+        }
+      }
+    }
+  ]
+}

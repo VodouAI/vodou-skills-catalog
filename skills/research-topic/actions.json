@@ -1,0 +1,41 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "Depth",
+      "options": {
+        "1": {
+          "label": "Quick lookup",
+          "vars": {},
+          "steps": [
+            {"server": "OI-context7", "tool": "resolve-library-id", "args": {"query": "{{TOPIC}}"}}
+          ]
+        },
+        "2": {
+          "label": "Full docs",
+          "vars": {},
+          "steps": [
+            {"server": "OI-context7", "tool": "resolve-library-id", "args": {"query": "{{TOPIC}}"}, "capture": {"LIBRARY_ID": "libraryId"}},
+            {"server": "OI-context7", "tool": "query-docs", "args": {"libraryId": "{{LIBRARY_ID}}", "query": "{{TOPIC}}"}}
+          ]
+        },
+        "3": {
+          "label": "Code examples",
+          "vars": {},
+          "steps": [
+            {"server": "OI-context7", "tool": "resolve-library-id", "args": {"query": "{{TOPIC}}"}, "capture": {"LIBRARY_ID": "libraryId"}},
+            {"server": "OI-context7", "tool": "query-docs", "args": {"libraryId": "{{LIBRARY_ID}}", "query": "{{TOPIC}} code examples and usage patterns"}}
+          ]
+        },
+        "4": {
+          "label": "API reference",
+          "vars": {},
+          "steps": [
+            {"server": "OI-context7", "tool": "resolve-library-id", "args": {"query": "{{TOPIC}}"}, "capture": {"LIBRARY_ID": "libraryId"}},
+            {"server": "OI-context7", "tool": "query-docs", "args": {"libraryId": "{{LIBRARY_ID}}", "query": "{{TOPIC}} complete API reference"}}
+          ]
+        }
+      }
+    }
+  ]
+}

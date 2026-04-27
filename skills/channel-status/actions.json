@@ -1,0 +1,38 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "Scope",
+      "options": {
+        "1": {
+          "label": "All channels",
+          "vars": {},
+          "steps": [
+            {"server": "OI-channels", "tool": "channel_status", "args": {}}
+          ]
+        },
+        "2": {
+          "label": "Messaging only",
+          "vars": {},
+          "steps": [
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "telegram"}},
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "slack"}},
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "discord"}},
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "whatsapp"}},
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "imessage"}},
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "teams"}},
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "googlechat"}},
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "signal"}}
+          ]
+        },
+        "3": {
+          "label": "Voice only",
+          "vars": {},
+          "steps": [
+            {"server": "OI-channels", "tool": "channel_status", "args": {"channel": "voice"}}
+          ]
+        }
+      }
+    }
+  ]
+}

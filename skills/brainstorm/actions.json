@@ -1,0 +1,31 @@
+{
+  "stopping_points": [
+    {
+      "id": 1,
+      "title": "Mode",
+      "options": {
+        "1": {
+          "label": "Brief (3 ideas)",
+          "vars": {},
+          "steps": [
+            {"server": "OI-LLM-router", "tool": "chat", "args": {"message": "Brainstorm exactly 3 concise, ready-to-use ideas for: {{TOPIC}}. Number them 1-3. No preamble, no caveats, just the ideas.", "clear_history": true}}
+          ]
+        },
+        "2": {
+          "label": "Standard (5 ideas)",
+          "vars": {},
+          "steps": [
+            {"server": "OI-LLM-router", "tool": "chat", "args": {"message": "Brainstorm 5 ideas for: {{TOPIC}}. Mix safe and slightly unusual. Number them 1-5. No preamble.", "clear_history": true}}
+          ]
+        },
+        "3": {
+          "label": "Wild (10 ideas)",
+          "vars": {},
+          "steps": [
+            {"server": "OI-LLM-router", "tool": "chat", "args": {"message": "Brainstorm 10 unconventional, surprising, or contrarian ideas for: {{TOPIC}}. Push hard — unusual angles, counterintuitive moves. Number them 1-10. No preamble, no apologies.", "clear_history": true}}
+          ]
+        }
+      }
+    }
+  ]
+}

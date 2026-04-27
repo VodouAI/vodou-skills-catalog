@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-27T01:00:00Z",
+  "updated_at": "2026-04-27T01:30:00Z",
   "entries": [
     {
       "id": "vodou.hello-catalog",
@@ -93,6 +93,96 @@
       "tags": [
         "reasoning",
         "analysis"
+      ]
+    },
+    {
+      "id": "vodou.dalle-image",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "f248eebfed992781273718096387e5d3018c595407dd25dd5d1b30b7581ed9b5",
+      "skill_name": "dalle-image",
+      "summary": "Generate images via DALL-E \u2014 quick, HD, or 4 variations",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/dalle-image"
+      },
+      "requires_mcp": [
+        "OI-dalle.generate_image",
+        "OI-dalle.create_variation"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "media",
+        "image-generation"
+      ]
+    },
+    {
+      "id": "vodou.channel-status",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "691f04465a6cd84d75c4b892bb6d0015aec8ed3122017b4bf80d1d04bbfc9062",
+      "skill_name": "channel-status",
+      "summary": "Check OI's connected messaging/voice channels",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/channel-status"
+      },
+      "requires_mcp": [
+        "OI-channels.channel_status"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "ops",
+        "messaging"
+      ]
+    },
+    {
+      "id": "vodou.brainstorm",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "084c44d34def64b91fcdd7a46f7eb988aca81e57c21717da8df6855588a0f73d",
+      "skill_name": "brainstorm",
+      "summary": "Brainstorm ideas via OI-LLM-router \u2014 brief, standard, or wild",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/brainstorm"
+      },
+      "requires_mcp": [
+        "OI-LLM-router.chat"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "reasoning",
+        "ideation"
+      ]
+    },
+    {
+      "id": "vodou.research-topic",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "eff9fdcb8837933a525fb66485bd29f0df65c134baf62281e31144255d2708bc",
+      "skill_name": "research-topic",
+      "summary": "Look up library docs via context7 \u2014 quick, full, examples, or API ref",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/research-topic"
+      },
+      "requires_mcp": [
+        "OI-context7.resolve-library-id",
+        "OI-context7.query-docs"
+      ],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "reference",
+        "docs"
       ]
     }
   ]
