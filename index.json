@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-27T03:55:00Z",
+  "updated_at": "2026-04-27T05:30:00Z",
   "entries": [
     {
       "id": "vodou.hello-catalog",
@@ -251,6 +251,27 @@
       "tags": [
         "relationships",
         "imessage"
+      ]
+    },
+    {
+      "id": "vodou.create-a-skill",
+      "tier": "curated",
+      "version": "1.0.0",
+      "sha256": "f072623064669114e12c2883ac6511efd9bd492abd9b56fa050c33f53e6762d3",
+      "skill_name": "create-a-skill",
+      "summary": "Guided wizard that builds a custom OI skill from your description \u2014 picks a type, names it, writes SKILL.md + actions.json, registers triggers",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/VodouAI/vodou-skills-catalog",
+        "ref": "main",
+        "path_in_repo": "skills/create-a-skill"
+      },
+      "requires_mcp": [],
+      "min_oi_version": "0.5.46",
+      "tags": [
+        "meta",
+        "skill-creation",
+        "wizard"
       ]
     }
   ]
